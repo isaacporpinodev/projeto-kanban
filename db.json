@@ -1,0 +1,26 @@
+{
+  "tasks": [
+    {
+      "id": "2",
+      "title": "Reunião com a equipe",
+      "description": "Reunião para discutir o progresso do projeto e próximos passos.",
+      "status": "done",
+      "priority": "high"
+    },
+    {
+      "id": "4",
+      "title": "Implementar testes",
+      "description": "Desenvolver os testes automatizados na nova funcionalidade do aplicativo.",
+      "status": "done",
+      "priority": "medium"
+    },
+    {
+      "title": "teste2",
+      "description": "teste",
+      "status": "done",
+      "priority": "low",
+      "id": "ooH_Ix8fnZs"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

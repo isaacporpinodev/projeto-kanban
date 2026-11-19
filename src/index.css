@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--gray-1);
+}
+
+button {
+  cursor: pointer;
+}
+
+.task-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.task-card-actions {
+  flex-shrink: 0;
+}
+
+.edit-task-button {
+  padding: 4px;
+  min-height: 28px;
+  min-width: 28px;
+}
+
+.empty-column {
+  display: block;
+  padding: 18px 12px;
+  border: 1px dashed var(--gray-a6);
+  border-radius: 8px;
+  color: var(--gray-10);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    height: auto;
+    padding-block: 16px;
+  }
+}
