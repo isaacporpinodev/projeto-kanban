@@ -4,7 +4,7 @@
       "id": "2",
       "title": "Reunião com a equipe",
       "description": "Reunião para discutir o progresso do projeto e próximos passos.",
-      "status": "done",
+      "status": "doing",
       "priority": "high"
     },
     {
@@ -17,9 +17,16 @@
     {
       "title": "teste2",
       "description": "teste",
-      "status": "done",
+      "status": "doing",
       "priority": "low",
       "id": "ooH_Ix8fnZs"
+    },
+    {
+      "title": "jh,frjyk",
+      "description": "tuyejjtyeu",
+      "status": "todo",
+      "priority": "low",
+      "id": "Upm8UKeEAq4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

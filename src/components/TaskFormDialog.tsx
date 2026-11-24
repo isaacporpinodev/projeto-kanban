@@ -20,24 +20,45 @@ interface TaskFormDialogProps {
 export const TaskFormDialog = ({ task, compact = false }: TaskFormDialogProps) => {
   const { createTask, updateTask } = useTasks();
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const taskData = TaskSchema.parse({
-      title: formData.get("title"),
-      description: formData.get("description"),
-      status: formData.get("status"),
-      priority: formData.get("priority"),
-    });
+    setError("");
+    setSaving(true);
 
-    if (task) await updateTask(task.id, taskData);
-    else await createTask(taskData);
-    setOpen(false);
+    try {
+      const formData = new FormData(event.currentTarget);
+      const taskData = TaskSchema.parse({
+        title: formData.get("title"),
+        description: formData.get("description"),
+        status: formData.get("status"),
+        priority: formData.get("priority"),
+      });
+
+      if (task) await updateTask(task.id, taskData);
+      else await createTask(taskData);
+      setOpen(false);
+    } catch (submitError) {
+      console.error("Erro ao salvar tarefa:", submitError);
+      setError(
+        submitError instanceof z.ZodError
+          ? "Confira o título, a descrição, a situação e a prioridade da tarefa."
+          : submitError instanceof Error
+            ? submitError.message
+            : "Não foi possível salvar a tarefa. Confira se a API está rodando."
+      );
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
+    <Dialog.Root open={open} onOpenChange={(nextOpen) => {
+      setOpen(nextOpen);
+      if (nextOpen) setError("");
+    }}>
       <Dialog.Trigger>
         {compact ? (
           <Button type="button" variant="ghost" color="gray" className="edit-task-button" aria-label={`Editar ${task?.title}`} title="Editar tarefa">
@@ -80,9 +101,10 @@ export const TaskFormDialog = ({ task, compact = false }: TaskFormDialogProps) =
                 </RadioGroup.Root>
               </Box>
             </Flex>
+            {error && <Text role="alert" color="red" size="2">{error}</Text>}
             <Flex gap="2" justify="end">
               <Dialog.Close><Button type="button" color="gray" variant="soft">Cancelar</Button></Dialog.Close>
-              <Button type="submit">{task ? "Salvar alterações" : "Criar tarefa"}</Button>
+              <Button type="submit" disabled={saving}>{saving ? "Salvando..." : task ? "Salvar alterações" : "Criar tarefa"}</Button>
             </Flex>
           </Flex>
         </form>
